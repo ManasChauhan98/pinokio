@@ -453,6 +453,20 @@ const clearPersistedSessionCookies = async () => {
     }
   }
 }
+const clearSessionCaches = async () => {
+  try {
+    await session.defaultSession.clearCache()
+  } catch (err) {
+    console.warn('[Session Cache] Failed to clear http cache', err)
+  }
+  try {
+    await session.defaultSession.clearStorageData({
+      storages: ['serviceworkers', 'cachestorage']
+    })
+  } catch (err) {
+    console.warn('[Session Cache] Failed to clear service worker/cache storage', err)
+  }
+}
 function UpsertKeyValue(obj, keyToChange, value) {
   const keyToChangeLower = keyToChange.toLowerCase();
   for (const key of Object.keys(obj)) {
@@ -2300,6 +2314,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     })
     try {
       await restoreSessionCookies()
+      await clearSessionCaches()
       try {
         const portInUse = await pinokiod.running(pinokiod.port)
         if (portInUse) {
