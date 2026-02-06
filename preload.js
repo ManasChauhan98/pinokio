@@ -156,7 +156,7 @@ window.electronAPI = {
     }
     log(`selected iframe src=${chosen.src || '<empty>'} visible=${chosen.visible ? 'yes' : 'no'} size=${Math.round(chosen.rect?.width || 0)}x${Math.round(chosen.rect?.height || 0)}`)
     const siblingsWithSameUrl = candidates.filter((candidate) => candidate.src === chosen.src)
-    const relativeOrdinal = siblingsWithSameUrl.indexOf(chosen)
+    const relativeOrdinal = siblingsWithSameUrl.indexOf()
     return {
       element: chosen.element,
       index: chosen.index,
